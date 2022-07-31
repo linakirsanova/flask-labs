@@ -52,7 +52,7 @@ You can also use the included VSCode launch configuration in .vscode/launch.json
 
 ### 0. Wha...?
 
-When poking around in Samir's app, you'll notice that something happens when you try to create two users with the same username or email. Fix this so that the app is able to handle this and let the user know the username is already taken.
+When poking around in Samir's app, you'll notice that something happens when you try to create two users with the same username or email. Fix this so that the app is able to handle this scenario and let the user know in some way.
 
 ### 1. Create The Relationship
 
