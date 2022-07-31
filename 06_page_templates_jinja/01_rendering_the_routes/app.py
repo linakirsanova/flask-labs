@@ -5,12 +5,16 @@ app = Flask(__name__)
 
 @app.route('/')
 def welcome():
+    # Emily made an html file for this route she wants to show
+    # for now she put this placeholder
     return "Welcome to Emily's Dog Costumes! See my <a href=\"/services\">"\
         "services</a> and current line of <a href=\"/costumes\">costumes</a>"
 
 
 @app.route('/services')
 def services():
+    # Emily made an html file for this route she wants to show
+    # for now she put this placeholder
     return "I offer custom made costumes for your precious canine companion, "\
         "and a free in-home consultation, to get the measurements."
 
@@ -46,5 +50,5 @@ def costumes():
     ]
 
     # Emily wants to list her costumes above (listed above)
-    # for now she put a placeholder
+    # for now she put this placeholder
     return f"Check out my costumes!"
