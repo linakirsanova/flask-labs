@@ -44,7 +44,9 @@ To get started with this lab:
   flask run
   ```
 
-You can also use the included VSCode launch configuration in `.vscode/launch.json`. after you open this lab as a folder in VSCode.
+You can also use the included VSCode launch configuration in [.vscode/launch.json](.vscode/launch.json). after you open this lab as a folder in VSCode.
+
+**Remember to create and use a separate Python virtual environment for each lab.** You'll be glad you did. :)
 
 ### 1. Build A Fake Data Generator
 

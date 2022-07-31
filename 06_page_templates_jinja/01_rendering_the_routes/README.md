@@ -14,6 +14,8 @@ In this lab, you are tasked with
     1. rendering templates within routes in Flask, and
     2. using Jinja variable placeholders and control structures to dynamically show dog costumes and their descriptions
 
+**Remember to create and use a separate Python virtual environment for each lab.** You'll be glad you did. :)
+
 ### 1. Rendering Templates
 
 Emily gave it a better shot with the routes, but then started working on HTML pages and previewing them manually. She wants to replace the old route text with the new templates, but didn't quite get that far. Have the routes render the corresponding templates directly.

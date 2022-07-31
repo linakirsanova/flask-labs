@@ -48,7 +48,7 @@ To get started with this lab:
   flask run
   ```
 
-You can also use the included VSCode launch configuration in .vscode/launch.json, after you open this lab as a folder in VSCode.
+You can also use the included VSCode launch configuration in [.vscode/launch.json](.vscode/launch.json), after you open this lab as a folder in VSCode.
 
 ### 0. Wha...?
 

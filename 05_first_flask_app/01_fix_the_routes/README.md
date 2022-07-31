@@ -20,3 +20,5 @@ You should be able to access:
   - and at least 100 more costume pages of whatever you can imagine
 
 Hint: No, you don't have to test that 102 different costume pages work, but you will have to test a few. ;)
+
+**Remember to create and use a separate Python virtual environment for each lab.** You'll be glad you did. :)

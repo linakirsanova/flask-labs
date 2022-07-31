@@ -14,6 +14,8 @@ ___
 
 Similar to how you inherited your grandfather's itchy sweaters against your own will (thanks gramps), in this lab you'll 1) be using template inheritance to prevent code reuse. Then once you have that, you'll 2) improve the look of the pages with Bootstrap.
 
+**Remember to create and use a separate Python virtual environment for each lab.** You'll be glad you did. :)
+
 ### 1. Make a Base Template
 
 The first step is to make a base template. There's a lot you can reuse in these templates, but to make it easier for you, make a base template that defines blocks for:

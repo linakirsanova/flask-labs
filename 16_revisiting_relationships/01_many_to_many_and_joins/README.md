@@ -24,7 +24,7 @@ If you're not familiar with how Reddit works, here's what things mean:
 
 **Read everything before you start!**
 
-In this lab, you will be enhancing an existing many-to-many relationship and using a database join to allow users to subscrbe to subreddits.
+In this lab, you will be enhancing an existing many-to-many relationship and using a database join to allow users to subscribe to subreddits.
 
 The code for interacting with the database uses SQLAlchemy functions you may not be familiar with, but this shouldn't stop you from doing this lab. What you've learned and seen from the course so far is all you need for completing this lab.
 
@@ -66,7 +66,9 @@ To get started with this lab:
   flask run
   ```
 
-You can also use the included VSCode launch configurations in `.vscode/launch.json`. after you open this lab as a folder in VSCode.
+You can also use the included VSCode launch configurations in [.vscode/launch.json](.vscode/launch.json). after you open this lab as a folder in VSCode.
+
+**Remember to create and use a separate Python virtual environment for each lab.** You'll be glad you did. :)
 
 ### 1. Enhanced Many-To-Many Relationship
 
