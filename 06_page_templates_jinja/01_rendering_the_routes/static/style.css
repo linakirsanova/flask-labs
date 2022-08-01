@@ -1,72 +1,20 @@
-html,
+/* Default style for all tags */
+
+head,
+title,
+meta,
 body,
+header,
 div,
-span,
-object,
-iframe,
+link,
+li,
+ul,
 h1,
 h2,
 h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-abbr,
-address,
-cite,
-code,
-del,
-dfn,
-em,
 img,
-ins,
-kbd,
-q,
-samp,
-small,
-strong,
-sub,
-sup,
-var,
-b,
-i,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-figcaption,
-figure,
 footer,
-header,
-hgroup,
-menu,
-nav,
-section,
-summary,
-time,
-mark,
-audio,
-video {
+p {
     margin: 0;
     padding: 0;
     border: 0;
@@ -75,6 +23,8 @@ video {
     vertical-align: baseline;
     background: transparent
 }
+
+/* Overwrite default styling for specific tags */
 
 body {
     line-height: 1;
@@ -97,34 +47,15 @@ h4 {
     font-size: 16px;
 }
 
-article,
-aside,
-details,
-figcaption,
-figure,
 footer,
 header,
-hgroup,
-menu,
 nav,
-section {
+div {
     display: block
 }
 
 nav ul {
     list-style: none
-}
-
-blockquote,
-q {
-    quotes: none
-}
-
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
-    content: none
 }
 
 a {
@@ -133,48 +64,6 @@ a {
     font-size: 100%;
     vertical-align: baseline;
     background: transparent
-}
-
-ins {
-    background-color: #ff9;
-    color: #000;
-    text-decoration: none
-}
-
-mark {
-    background-color: #ff9;
-    color: #000;
-    font-style: italic;
-    font-weight: bold
-}
-
-del {
-    text-decoration: line-through
-}
-
-abbr[title],
-dfn[title] {
-    border-bottom: 1px dotted;
-    cursor: help
-}
-
-table {
-    border-collapse: collapse;
-    border-spacing: 0
-}
-
-hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0
-}
-
-input,
-select {
-    vertical-align: middle
 }
 
 body,
@@ -222,30 +111,10 @@ nav ul {
     border: none;
 }
 
-main {
-    float: left;
-    width: 60%;
-}
-
-aside {
-    float: right;
-    width: 30%;
-}
-
-article {
-    border-bottom: 2px dotted #999;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
-}
-
-article h2 {
+h2 {
     font-weight: normal;
     margin-bottom: 12px;
 }
-
-article p {}
-
-main section {}
 
 footer {
     background: #AEC6CF;
@@ -259,14 +128,12 @@ footer p {
     padding: 20px;
 }
 
-address {
-    padding: 10px 20px 30px 10px;
+div>p {
+    margin: 10px;
 }
 
-aside>div {
-    margin: 10px auto;
-    background: #AEC6CF;
-    min-height: 100px;
+address {
+    padding: 10px 20px 30px 10px;
 }
 
 #logo {
@@ -283,7 +150,7 @@ aside>div {
     margin-right: 10px;
 }
 
-body>section {
+body>div {
     max-width: 1000px;
     margin: auto;
     padding: 30px 0px;
@@ -292,22 +159,20 @@ body>section {
 }
 
 @media screen and (max-width: 1000px) {
-    body>section {
+    body>div {
         padding: 30px 20px;
     }
 }
 
 @media screen and (max-width: 600px) {
-    main {
+    div {
         float: none;
         width: 100%;
     }
+}
 
-    aside {
-        float: none;
-        width: 100%;
-    }
-
+.costume {
+    margin: 10px;
 }
 
 img.costume {
