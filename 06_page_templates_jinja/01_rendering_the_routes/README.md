@@ -28,4 +28,6 @@ Emily gave it a better shot with the routes, but then started working on HTML pa
 
 Emily has already given you list of costumes she wants displayed on the page, in the `costumes()` route in `app.py`. She's also provided an example of how she wants each costume to look in the page, in `templates/costumes.html`.
 
+Your task is to take that list of costumes and display each in the template using Jinja. Your changes for this task will almost exclusively be in the `costumes.html` template. Take your time to understand how to display one costume using Jinja placeholders and control structures. Then, try to display all the costumes using as few lines of Jinja magic as you can. What kind of control structures would help you do that?
+
 Hint: Displaying the image for each costume might be a little tricky. Your editor's syntax highlighting/coloring might not help you in this case.
