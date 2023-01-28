@@ -1,6 +1,6 @@
 # Template Inheritance
 
-Another thing that bugs you about Emily's webdev work is that her website still looks like it came out right after the birth of the Internet, like the old [SpaceJam](https://spacejam.com/) website. You know just how much better webpages with **Bootstrap** look, so you're planning to make her site look much better. Hopefully she doesn't get mad about the redesign and take back all those dog costumes you've more than earned (although a gift card to Applebee's would have been *so* much better).
+Another thing that bugs you about Emily's webdev work is that her website still looks like it came out right after the birth of the Internet, like the old [SpaceJam](https://spacejam.com/1996) website. You know just how much better webpages with **Bootstrap** look, so you're planning to make her site look much better. Hopefully she doesn't get mad about the redesign and take back all those dog costumes you've more than earned (although a gift card to Applebee's would have been *so* much better).
 
 ___
 
