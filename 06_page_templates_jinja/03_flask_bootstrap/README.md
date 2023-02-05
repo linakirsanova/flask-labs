@@ -16,11 +16,11 @@ Now that you have template inheritance working in Emily's app, your next task is
 
 ### Task: Bootstrapping the Project
 
-Only after step 1 will you be ready for step 2, which is to add Flask-Bootstrap to the project to improve the look of the pages. Keep the original `style.css` in as it defines CSS classes that are used in the templates.
+Now your task is to add Flask-Bootstrap to the project to improve the look of the pages. That means applying some Bootstrap styles to Emily's newly template-inheritance'd pages. Keep the original `style.css` in as it defines CSS classes that are used in the templates.
 
 Once you see that the pages have Bootstrap styles, replace the `<header>` tags with a fancy Bootstrap navigation bar. See the course page on Flask-Bootstrap for the HTML structure for the navbar.
 
-In short, for this step, all you are required to do is:
+In short, for this lab, all you are required to do is:
 
-- add Flask-Bootstrap
-- replace the header with a navigation bar
+1. add Flask-Bootstrap
+2. replace the header with a navigation bar
