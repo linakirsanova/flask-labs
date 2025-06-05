@@ -1,8 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 import datetime
-from blogger import app
 
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 
 
 class User(db.Model):
@@ -36,4 +35,3 @@ class Post(db.Model):
         self.puid = puid
 
 
-db.create_all()
