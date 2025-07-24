@@ -22,6 +22,7 @@
 <div class="container">
     <form class="form-signin" action="" method="POST">
         <h2 class="form-signin-heading">Please Sign In</h2>
+        {{ signinform.hidden_tag() }}
         {{ signinform.email(placeholder="Email",id="inputEmail", class="form-control", autofocus="") }}
         {{ signinform.password(placeholder="Password",id="inputPassword", class="form-control", required="") }}
         <div class="checkbox">

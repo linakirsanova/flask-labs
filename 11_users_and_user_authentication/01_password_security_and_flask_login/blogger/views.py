@@ -1,4 +1,5 @@
 from flask import Flask, request, session, redirect, url_for, render_template, flash, jsonify
+from flask_login import logout_user, login_user, login_required, current_user
 
 from . models import User, Post, db
 from . forms import AddPostForm, SignUpForm, SignInForm, AboutUserForm
@@ -12,28 +13,24 @@ def index():
 
 
 @app.route('/posts')
+@login_required
 def show_posts():
-    if session['user_available']:
-        posts = Post.query.all()
-        user = User.query.all()
-        return render_template('posts.html', posts=posts, user=user)
-    flash('User is not Authenticated')
-    return redirect(url_for('index'))
+    posts = Post.query.all()
+    user = User.query.all()
+    return render_template('posts.html', posts=posts, user=user)
 
 
 @app.route('/add', methods=['GET', 'POST'])
+@login_required
 def add_post():
-    if session['user_available']:
-        blogpost = AddPostForm(request.form)
-        us = User.query.filter_by(username=session['current_user']).first()
-        if request.method == 'POST':
-            bp = Post(blogpost.title.data, blogpost.description.data, us.uid)
-            db.session.add(bp)
-            db.session.commit()
-            return redirect(url_for('show_posts'))
-        return render_template('add.html', blogpost=blogpost)
-    flash('User is not Authenticated')
-    return redirect(url_for('index'))
+    blogpost = AddPostForm(request.form)
+    us = User.query.filter_by(username=session['current_user']).first()
+    if request.method == 'POST':
+        bp = Post(blogpost.title.data, blogpost.description.data, us.uid)
+        db.session.add(bp)
+        db.session.commit()
+        return redirect(url_for('show_posts'))
+    return render_template('add.html', blogpost=blogpost)
 
 
 @app.route('/delete/<pid>/<post_owner>', methods=('GET', 'POST'))
@@ -79,31 +76,36 @@ def signup():
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
     signinform = SignInForm()
-    if request.method == 'POST':
-        em = signinform.email.data
-        log = User.query.filter_by(email=em).first()
-        if log.password == signinform.password.data:
-            current_user = log.username
-            session['current_user'] = current_user
-            session['user_available'] = True
-            return redirect(url_for('show_posts'))
+    if signinform.validate_on_submit():
+        print('llll')
+        user = User.query.filter_by(email=signinform.email.data).first()
+        print(user, signinform.password.data)
+
+        if user and user.verify_password(signinform.password.data):
+            login_user(user, remember=signinform.remember_me.data)
+            print('Login successful!')
+            flash('Login successful!', 'success')
+            next = request.args.get('next')
+            if next is None or not next.startswith('/'):
+                next = url_for('index')
+            return redirect(next)
+        else:
+            flash('Invalid email or password', 'error')
     return render_template('signin.html', signinform=signinform)
 
 
 @app.route('/about_user')
+@login_required
 def about_user():
     aboutuserform = AboutUserForm()
-    if session['user_available']:
-        user = User.query.filter_by(username=session['current_user']).first()
-        return render_template('about_user.html', user=user, aboutuserform=aboutuserform)
-    flash('You are not a Authenticated User')
-    return redirect(url_for('index'))
+    user = User.query.filter_by(username=session['current_user']).first()
+    return render_template('about_user.html', user=user, aboutuserform=aboutuserform)
 
 
 @app.route('/logout')
 def logout():
-    session.clear()
-    session['user_available'] = False
+    logout_user()
+    flash("You've been logged out successfully")
     return redirect(url_for('index'))
 
 
