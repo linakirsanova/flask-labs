@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "_macros.html" import render_pagination %}
 
 {% block js %}
 <script src="{{ url_for('static', filename='js/todolist.js') }}"></script>
@@ -25,22 +26,24 @@
       <div class="one-half column open-todos">
         <h6 class="docs-header">{{ todolist.open_count }} open</h6>
         <ul>
-          {% for todo in todolist.todos %}
-            {% if not todo.is_finished %}
-              <li><input type="checkbox" id="checkbox" data-todo-id="{{ todo.id }}"> {{ todo.description }}</li>
-            {% endif %}
+          {% for todo in open_pagination.items %}
+            <li><input type="checkbox" id="checkbox" data-todo-id="{{ todo.id }}"> {{ todo.description }}</li>
           {% endfor %}
         </ul>
+        {% if open_pagination.pages > 1 %}
+          {{ render_pagination(open_pagination, 'main.todolist', todolist.id, 'open_page', 'finished_page', finished_pagination.page) }}
+        {% endif %}
       </div>
       <div class="one-half column finished-todos">
         <h6 class="docs-header">{{ todolist.finished_count }} finished</h6>
         <ul>
-          {% for todo in todolist.todos %}
-            {% if todo.is_finished %}
-              <li><input type="checkbox" id="checkbox" data-todo-id="{{ todo.id }}" checked="checked"> {{ todo.description }}</li>
-            {% endif %}
+          {% for todo in finished_pagination.items %}
+            <li><input type="checkbox" id="checkbox" data-todo-id="{{ todo.id }}" checked="checked"> {{ todo.description }}</li>
           {% endfor %}
         </ul>
+        {% if finished_pagination.pages > 1 %}
+          {{ render_pagination(finished_pagination, 'main.todolist', todolist.id, 'finished_page', 'open_page', open_pagination.page) }}
+        {% endif %}
       </div>
     </div>
   </div>

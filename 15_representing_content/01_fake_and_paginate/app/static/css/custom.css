@@ -229,3 +229,39 @@ tr td.todolist-title {
   }
 }
 
+.pagination {
+  margin-top: 1rem;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.pagination a,
+.pagination span {
+  display: inline-block;
+  padding: 0.5rem 0.75rem;
+  margin: 0 0.25rem;
+  text-decoration: none;
+  color: #33C3F0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.pagination a:hover {
+  background-color: #33C3F0;
+  color: #fff;
+  border-color: #33C3F0;
+}
+
+.pagination .current {
+  background-color: #33C3F0;
+  color: #fff;
+  border-color: #33C3F0;
+  font-weight: bold;
+}
+
+.pagination .ellipsis {
+  border: none;
+  padding: 0.5rem 0.25rem;
+  color: #999;
+}
+
