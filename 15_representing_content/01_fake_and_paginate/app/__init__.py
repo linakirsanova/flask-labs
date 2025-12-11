@@ -37,4 +37,10 @@ def create_app(config_name):
 
     app.register_blueprint(utils_blueprint)
 
+    from .faker import fill_db as fill_db_func
+
+    @app.cli.command("fill_db")
+    def fill_db_command():
+        fill_db_func()
+
     return app
