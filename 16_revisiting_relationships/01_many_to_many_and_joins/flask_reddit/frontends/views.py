@@ -53,10 +53,10 @@ def process_thread_paginator(trending=False, rs=None, subreddit=None):
 
     if trending:
         thread_paginator = base_query.order_by(db.desc(Thread.votes)).\
-        paginate(cur_page, per_page=threads_per_page, error_out=True)
+        paginate(page=cur_page, per_page=threads_per_page, error_out=True)
     else:
         thread_paginator = base_query.order_by(db.desc(Thread.hotness)).\
-                paginate(cur_page, per_page=threads_per_page, error_out=True)
+                paginate(page=cur_page, per_page=threads_per_page, error_out=True)
     return thread_paginator
 
 #@mod.route('/<regex("trending"):trending>/')

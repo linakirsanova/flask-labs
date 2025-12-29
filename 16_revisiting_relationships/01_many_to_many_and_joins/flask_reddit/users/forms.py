@@ -2,21 +2,21 @@
 Logic handling user specific input forms such as logins and registration.
 """
 from flask_wtf import FlaskForm
-from wtforms import TextField, PasswordField, BooleanField
-from wtforms.validators import Required, EqualTo, Email
+from wtforms import StringField, PasswordField, BooleanField
+from wtforms.validators import DataRequired, EqualTo, Email
 
 
 class LoginForm(FlaskForm):
-    email = TextField('Email address', [Required(), Email()])
-    password = PasswordField('Password', [Required()])
+    email = StringField('Email address', [DataRequired(), Email()])
+    password = PasswordField('Password', [DataRequired()])
 
 
 class RegisterForm(FlaskForm):
-    username = TextField('NickName', [Required()])
-    email = TextField('Email address', [Required(), Email()])
-    password = PasswordField('Password', [Required()])
+    username = StringField('NickName', [DataRequired()])
+    email = StringField('Email address', [DataRequired(), Email()])
+    password = PasswordField('Password', [DataRequired()])
     confirm = PasswordField('Repeat Password', [
-        Required(),
+        DataRequired(),
         EqualTo('password', message='Passwords must match')
     ])
-    accept_tos = BooleanField('I accept the Terms of Service.', [Required()])
+    accept_tos = BooleanField('I accept the Terms of Service.', [DataRequired()])
