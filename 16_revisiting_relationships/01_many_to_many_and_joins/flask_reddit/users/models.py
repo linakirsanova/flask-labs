@@ -1,12 +1,9 @@
-"""
-"""
+from sqlalchemy import select, and_, func
 from flask_reddit import db
 from flask_reddit.users import constants as USER
 from flask_reddit.threads.models import thread_upvotes, comment_upvotes
 
 class User(db.Model):
-    """
-    """
     __tablename__ = 'users_user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(USER.MAX_USERNAME), unique=True)
@@ -42,33 +39,33 @@ class User(db.Model):
         return USER.ROLE[self.role]
 
     def get_thread_karma(self):
-        """
-        fetch the number of votes this user has had on his/her threads
-
-        1.) Get id's of all threads by this user
-
-        2.) See how many of those threads also were upvoted but not by
-        the person him/her self.
-        """
         thread_ids = [t.id for t in self.threads]
-        select = thread_upvotes.select(db.and_(
+
+        if not thread_ids:
+            return 0
+
+        stmt = select(thread_upvotes).where(
+            and_(
                 thread_upvotes.c.thread_id.in_(thread_ids),
                 thread_upvotes.c.user_id != self.id
             )
         )
-        rs = db.engine.execute(select)
-        return rs.rowcount
+
+        result = db.session.execute(stmt)
+        return len(result.all())
 
     def get_comment_karma(self):
-        """
-        fetch the number of votes this user has had on his/her comments
-        """
         comment_ids = [c.id for c in self.comments]
-        select = comment_upvotes.select(db.and_(
+
+        if not comment_ids:
+            return 0
+
+        stmt = select(func.count()).select_from(comment_upvotes).where(
+            and_(
                 comment_upvotes.c.comment_id.in_(comment_ids),
                 comment_upvotes.c.user_id != self.id
             )
         )
-        rs = db.engine.execute(select)
-        return rs.rowcount
 
+        result = db.session.execute(stmt)
+        return result.scalar()

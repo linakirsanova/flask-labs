@@ -1,7 +1,4 @@
-"""
-All database abstractions for threads and comments
-go in this file.
-"""
+from sqlalchemy import insert, delete, select, and_
 from flask import url_for
 from flask_reddit import db
 from flask_reddit.threads import constants as THREAD
@@ -135,50 +132,41 @@ class Thread(db.Model):
         return ids
 
     def has_voted(self, user_id):
-        """
-        did the user vote already
-        """
-        select_votes = thread_upvotes.select(
-                db.and_(
-                    thread_upvotes.c.user_id == user_id,
-                    thread_upvotes.c.thread_id == self.id
-                )
+
+        stmt = select(thread_upvotes).where(
+            and_(
+                thread_upvotes.c.user_id == user_id,
+                thread_upvotes.c.thread_id == self.id
+            )
         )
-        rs = db.engine.execute(select_votes)
-        return False if rs.rowcount == 0 else True
+        result = db.session.execute(stmt)
+        return result.first() is not None
 
     def vote(self, user_id):
-        """
-        allow a user to vote on a thread. if we have voted already
-        (and they are clicking again), this means that they are trying
-        to unvote the thread, return status of the vote for that user
-        """
         already_voted = self.has_voted(user_id)
         vote_status = None
+
         if not already_voted:
-            # vote up the thread (insert a new row into association table)
-            db.engine.execute(
-                thread_upvotes.insert(),
-                user_id   = user_id,
-                thread_id = self.id
+            stmt = insert(thread_upvotes).values(
+                user_id=user_id,
+                thread_id=self.id
             )
+            db.session.execute(stmt)
             self.votes = self.votes + 1
             vote_status = True
         else:
             # unvote the thread
-            db.engine.execute(
-                # delete the row that contains the passed-in user ID and
-                # this thread ID
-                thread_upvotes.delete(
-                    db.and_(
-                        thread_upvotes.c.user_id == user_id,
-                        thread_upvotes.c.thread_id == self.id
-                    )
+            stmt = delete(thread_upvotes).where(
+                and_(
+                    thread_upvotes.c.user_id == user_id,
+                    thread_upvotes.c.thread_id == self.id
                 )
             )
+            db.session.execute(stmt)
             self.votes = self.votes - 1
             vote_status = False
-        db.session.commit() # for the vote count
+
+        db.session.commit()
         return vote_status
 
     def extract_thumbnail(self):

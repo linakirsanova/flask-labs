@@ -9,21 +9,32 @@ import readline
 
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from flask_reddit import db
+from flask_reddit import app, db
 from flask_reddit.users.models import User
 from flask_reddit.subreddits.models import Subreddit
 
-db.drop_all()
-db.create_all()
+with app.app_context():
+    db.drop_all()
+    db.create_all()
 
-first_user = User(username='root', email='root@example.com', \
-        password=generate_password_hash('347895237408927419471483204721'))
+    first_user = User(
+        username='root', 
+        email='root@example.com',
+        password=generate_password_hash('347895237408927419471483204721')
+    )
 
-#db.session.add(first_user)
-db.session.commit()
+    db.session.add(first_user)
+    db.session.commit()
 
-first_subreddit = Subreddit(name='frontpage', desc='Welcome to Reddit! Here is our homepage.',
-        admin_id=first_user.id)
+    first_subreddit = Subreddit(
+        name='frontpage', 
+        desc='Welcome to Reddit! Here is our homepage.',
+        admin_id=first_user.id
+    )
 
-db.session.add(first_subreddit)
-db.session.commit()
+    db.session.add(first_subreddit)
+    db.session.commit()
+
+    print("Database initialized successfully!")
+    print(f"Created user: {first_user.username}")
+    print(f"Created subreddit: {first_subreddit.name}")
