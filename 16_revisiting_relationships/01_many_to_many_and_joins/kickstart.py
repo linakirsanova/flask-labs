@@ -18,7 +18,7 @@ with app.app_context():
     db.create_all()
 
     first_user = User(
-        username='root', 
+        username='root',
         email='root@example.com',
         password=generate_password_hash('347895237408927419471483204721')
     )

@@ -2,6 +2,13 @@ from sqlalchemy import select, and_, func
 from flask_reddit import db
 from flask_reddit.users import constants as USER
 from flask_reddit.threads.models import thread_upvotes, comment_upvotes
+from datetime import datetime
+
+subscriptions = db.Table('subscriptions',
+    db.Column('user_id', db.Integer, db.ForeignKey('users_user.id'), primary_key=True),  # ← Changed from 'users.id'
+    db.Column('subreddit_id', db.Integer, db.ForeignKey('subreddits_subreddit.id'), primary_key=True),
+    db.Column('subscribed_at', db.DateTime, default=datetime.utcnow)
+)
 
 class User(db.Model):
     __tablename__ = 'users_user'
@@ -14,6 +21,12 @@ class User(db.Model):
     threads = db.relationship('Thread', backref='user', lazy='dynamic')
     comments = db.relationship('Comment', backref='user', lazy='dynamic')
     subreddits = db.relationship('Subreddit', backref='user', lazy='dynamic')
+    subscribed_subreddits = db.relationship(
+        'Subreddit',
+        secondary=subscriptions,
+        backref=db.backref('subscribers', lazy='dynamic'),
+        lazy='dynamic'
+    )
 
     status = db.Column(db.SmallInteger, default=USER.ALIVE)
     role = db.Column(db.SmallInteger, default=USER.USER)
@@ -69,3 +82,24 @@ class User(db.Model):
 
         result = db.session.execute(stmt)
         return result.scalar()
+
+    def subscribe(self, subreddit):
+        """Subscribe to a subreddit"""
+        if not self.is_subscribed(subreddit):
+            self.subscribed_subreddits.append(subreddit)
+            return True
+        return False
+
+    def unsubscribe(self, subreddit):
+        """Unsubscribe from a subreddit"""
+        if self.is_subscribed(subreddit):
+            self.subscribed_subreddits.remove(subreddit)
+            return True
+        return False
+
+    def is_subscribed(self, subreddit):
+        """Check if user is subscribed to a subreddit"""
+        return self.subscribed_subreddits.filter(
+            subscriptions.c.subreddit_id == subreddit.id
+        ).count() > 0
+

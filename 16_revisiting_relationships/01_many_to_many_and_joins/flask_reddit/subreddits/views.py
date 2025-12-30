@@ -1,7 +1,6 @@
-"""
-"""
 from flask import (Blueprint, request, render_template, flash, g,
-        session, redirect, url_for, abort)
+        session, redirect, url_for, abort, jsonify, g)
+from flask_reddit.users.decorators import requires_login
 from flask_reddit.frontends.views import get_subreddits, process_thread_paginator
 from flask_reddit.subreddits.forms import SubmitForm
 from flask_reddit.subreddits.models import Subreddit
@@ -87,3 +86,30 @@ def permalink(subreddit_name=""):
     return render_template('home.html', user=g.user, thread_paginator=thread_paginator,
         subreddits=subreddits, cur_subreddit=subreddit)
 
+@mod.route('/r/<subreddit_name>/subscribe/', methods=['POST'])
+@requires_login
+def subscribe(subreddit_name):
+    subreddit = Subreddit.query.filter_by(name=subreddit_name).first()
+    if not subreddit:
+        flash('Subreddit not found')
+        return redirect(url_for('frontends.home'))
+    if g.user.subscribe(subreddit):
+        db.session.commit()
+        flash(f'Subscribed to r/{subreddit_name}')
+    else:
+        flash(f'Already subscribed to r/{subreddit_name}')
+    return redirect(url_for('subreddits.permalink', subreddit_name=subreddit_name))
+
+@mod.route('/r/<subreddit_name>/unsubscribe/', methods=['POST'])
+@requires_login
+def unsubscribe(subreddit_name):
+    subreddit = Subreddit.query.filter_by(name=subreddit_name).first()
+    if not subreddit:
+        flash('Subreddit not found')
+        return redirect(url_for('frontends.home'))
+    if g.user.unsubscribe(subreddit):
+        db.session.commit()
+        flash(f'Unsubscribed from r/{subreddit_name}')
+    else:
+        flash(f'Not subscribed to r/{subreddit_name}')
+    return redirect(url_for('subreddits.permalink', subreddit_name=subreddit_name))

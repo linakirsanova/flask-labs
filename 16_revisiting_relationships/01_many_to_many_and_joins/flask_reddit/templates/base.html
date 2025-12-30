@@ -48,6 +48,11 @@
               <li>
                   <a href="/?trending=true">trending</a>
               </li>
+              {% if user %}
+                  <li {% if show_subscribed %}class="active"{% endif %}>
+                      <a href="{{ url_for('frontends.subscribed') }}">Subscribed</a>
+                  </li>
+              {% endif %}
           </ul>
           <ul class="nav navbar-nav navbar-right">
           {% if user is not defined or user == None %}

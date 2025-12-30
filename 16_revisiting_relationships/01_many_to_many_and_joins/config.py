@@ -16,4 +16,4 @@ CSRF_ENABLED = True
 CSRF_SESSION_KEY = ""
 
 BRAND = "reddit"
-ROOT_URL = "http://localhost:20000"
+# ROOT_URL = "http://localhost:20000"

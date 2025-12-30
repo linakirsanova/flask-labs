@@ -104,3 +104,7 @@ class Subreddit(db.Model):
         comment.set_depth()
         return comment
     """
+
+    def get_subscriber_count(self):
+        """Get number of subscribers"""
+        return self.subscribers.count()

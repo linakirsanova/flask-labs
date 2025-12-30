@@ -1,9 +1,7 @@
-"""
-"""
 from flask import (Blueprint, request, render_template, flash,
-    g, session, redirect, url_for)
+    g, session, redirect, url_for, current_app)
 from werkzeug.security import check_password_hash, generate_password_hash
-
+from sqlalchemy import and_
 from flask_reddit import db
 from flask_reddit import search as search_module # don't override function name
 from flask_reddit.users.forms import RegisterForm, LoginForm
@@ -155,4 +153,35 @@ def register():
         return redirect(url_for('frontends.home'))
 
     return render_template("register.html", form=form, next=next)
+
+@mod.route('/subscribed/')
+@requires_login
+def subscribed():
+    subscribed_ids = [s.id for s in g.user.subscribed_subreddits.all()]
+
+    if not subscribed_ids:
+        flash('You are not subscribed to any subreddits yet!')
+        return redirect(url_for('frontends.home'))
+
+    # Get threads from subscribed subreddits, sorted by votes
+    threads = Thread.query.filter(
+        Thread.subreddit_id.in_(subscribed_ids)
+    ).order_by(Thread.votes.desc())
+
+    # Paginate
+    page = request.args.get('page', 1, type=int)
+    threads_per_page = current_app.config.get('THREADS_PER_PAGE', 25)
+
+    thread_paginator = threads.paginate(
+        page=page,
+        per_page=threads_per_page,
+        error_out=False
+    )
+    subreddits = Subreddit.query.all()
+
+    return render_template('home.html',
+                         user=g.user,
+                         thread_paginator=thread_paginator,
+                         subreddits=subreddits,
+                         show_subscribed=True)
 
